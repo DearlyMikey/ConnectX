@@ -25,7 +25,7 @@ public class BoardPosition {
      * @pre r {@code >=} 0 AND r {@code <=} 8 AND
      * c {@code >=} 0 AND col {@code <=} 6
      *
-     * @post row = #r AND col = #c
+     * @post row = r AND col = c
      */
     public BoardPosition(int r, int c) {}
     /**
@@ -37,6 +37,7 @@ public class BoardPosition {
      *
      * @post getRow = #row
      *
+     * @return row
      */
     public int getRow() {}
     /**
@@ -47,6 +48,8 @@ public class BoardPosition {
      * @pre col {@code >=} 0 AND col {@code <=} 6
      *
      * @post getCol = #col
+     *
+     * @return col
      */
     public int getCol() {}
     /**
