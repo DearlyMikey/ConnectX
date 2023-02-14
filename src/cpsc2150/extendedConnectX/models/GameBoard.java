@@ -7,19 +7,19 @@ package cpsc2150.extendedConnectX.models;
  * @author Michael Gonzales
  * @version 1.0
  *
- * @invariant p != null
+ *
  */
 public class GameBoard {
+
     private char[][] board;
-    public final static int maxCol = 6;
-    public final static int maxRow = 8;
 
     /**
      *
      * This is the constructor for the class that initializes
      * the game board
-     * @pre
+     *
      * @post board = new char[row][col]
+     *
      */
     public GameBoard() {}
 
@@ -32,7 +32,7 @@ public class GameBoard {
      *
      * @pre c >= 0 AND c <= 6
      *
-     * @post [if true, column has space for another token]
+     * @post [true if the column has space for another token, false otherwise]
      *
      */
     public boolean checkIfFree(int c) {}
@@ -70,9 +70,11 @@ public class GameBoard {
     /**
      * This methods checks whether the game has resulted in a tie
      *
-     * @return true or false depending on if latest taken placed
-     * results in a tie
+     * @return true if latest token placed results in a tie, false otherwise
      *
+     * @pre [checkIfFree == false on all columns]
+     *
+     * @post [if true, game isn't won by either player]
      */
     public boolean checkTie() {}
 
@@ -87,6 +89,7 @@ public class GameBoard {
      * otherwise false
      *
      * @pre p != null AND [BoardPosition is valid]
+     *
      * @post [true is a player win, false is not a win]
      */
     public boolean checkHorizWin(BoardPosition pos, char p) {}
@@ -156,13 +159,13 @@ public class GameBoard {
      * This methods override toString to return a string that shows
      * the entire game board.
      *
-     * @param obj
+     * @param obj Object class
+     *
+     * @return string that shows entire game board
      *
      * @pre board != null
      *
      * @post toString = [current game board]
-     *
-     * @return string that shows entire game board
      */
     @Override
     public String toString(Object obj) {}
