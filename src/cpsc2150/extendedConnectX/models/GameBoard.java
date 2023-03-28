@@ -7,35 +7,41 @@ package cpsc2150.extendedConnectX.models;
  * @author Michael Gonzales
  * @version 1.0
  *
+ * @correspondence number_of_rows = height AND
+ *                 number_of_columns = width AND
+ *                 number_to_win = numToWin AND
+ *                 self = board[0...height-1][0...width-1]
+ *
+ * @invariant board has no gaps between non-space tokens AND
+ *            0 < width <= MAXCOLS
+ *            0 < height <= MAXROWS
  *
  */
-public class GameBoard {
+public class GameBoard extends AbsGameBoard implements IGameBoard{
 
+    private int height;
+    private int width;
     private char[][] board;
+    private int numToWin;
 
     /**
      *
      * This is the constructor for the class that initializes
      * the game board
      *
-     * @post board = new char[row][col]
+     * @post board = new char[row][col] AND every space on board is empty
      *
      */
-    public GameBoard() {}
-
-    /**
-     * This method checks if the column can take another token.
-     *
-     * @param c column number
-     *
-     * @return true if the column is free, otherwise false
-     *
-     * @pre c >= 0 AND c <= 6
-     *
-     * @post [true if the column has space for another token, false otherwise]
-     *
-     */
-    public boolean checkIfFree(int c) {}
+    public GameBoard() {
+        height = 9;
+        width = 7;
+        board = new char[height+1][width+1];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                board[i][j] = ' ';
+            }
+        }
+    }
 
     /**
      * This method places the player token into
@@ -50,80 +56,14 @@ public class GameBoard {
      * @post [token placed in lowest available row]
      *
      */
-    public void placeToken(char p, int c) {}
-
-    /**
-     * This method checks if the latest token placed
-     * results in a win
-     *
-     * @param c column number
-     *
-     * @pre c >= 0 AND c <= 6
-     *
-     * @post iff checkForWin(int c) == true, [game is won by latest player]
-     *
-     * @return true or false depending on if latest token
-     * placed results in a win
-     */
-    public boolean checkForWin(int c) {}
-
-    /**
-     * This methods checks whether the game has resulted in a tie
-     *
-     * @return true if latest token placed results in a tie, false otherwise
-     *
-     * @pre [checkIfFree == false on all columns]
-     *
-     * @post [if true, game isn't won by either player]
-     */
-    public boolean checkTie() {}
-
-    /**
-     * This method checks if the last token placed (which was
-     * placed in position pos by player p) resulted in 5 in a row horizontally
-     *
-     * @param pos BoardPosition that holds [row][col] positions
-     * @param p player token
-     *
-     * @return true if player has 5 token in a row horizontally,
-     * otherwise false
-     *
-     * @pre p != null AND [BoardPosition is valid]
-     *
-     * @post [true is a player win, false is not a win]
-     */
-    public boolean checkHorizWin(BoardPosition pos, char p) {}
-
-    /**
-     * This method checks if the last token placed (which was
-     * placed in position pos by player p) resulted in 5 in a row vertically
-     *
-     * @param pos BoardPosition that holds [row][col] positions
-     * @param p player token
-     *
-     * @return true if player has 5 tokens in a row vertically,
-     * otherwise false
-     *
-     * @pre p != null AND [BoardPosition is valid]
-     *
-     * @post [true is a player win, false is not a win]
-     */
-    public boolean checkVertWin(BoardPosition pos, char p) {}
-
-    /**
-     * This method checks if the last token placed (which was
-     * placed in position pos by player p) resulted in 5 in a row diagonally
-     *
-     * @param pos BoardPosition that holds [row][col] positions
-     * @param p player token
-     *
-     * @return true if player has 5 token in a row diagonally, otherwise false
-     *
-     * @pre p != null AND [BoardPosition is valid]
-     *
-     * @post [true is a player win, false is not a win]
-     */
-    public boolean checkDiagWin(BoardPosition pos, char p) {}
+    public void placeToken(char p, int c) {
+        for(int i = 0; i < height; i++) {
+            if (board[i][c] == ' ') {
+                board[i][c] = p;
+                return;
+            }
+        }
+    }
 
     /**
      * Returns what is in the GameBoard at position pos.
@@ -137,40 +77,22 @@ public class GameBoard {
      *
      * @post [char in position is found]
      */
-    public char whatsAtPos(BoardPosition pos) {}
+    public char whatsAtPos(BoardPosition pos) {
+        int row = pos.getRow();
+        int col = pos.getCol();
+        return board[row][col];
+    }
 
-    /**
-     * This method returns true if a player taken is in the given position,
-     * otherwise returns false
-     *
-     * @param pos BoardPosition that holds [row][col] positions
-     * @param player char of player token
-     *
-     * @return true if the player is at pos; otherwise, returns false
-     *
-     * @pre [BoardPosition is valid] and player != null
-     *
-     * @post [true if given player and position match, false otherwise]
-     *
-     */
-    public boolean isPlayerAtPos(BoardPosition pos, char player) {}
+    public int getNumRows() {
+        return height;
+    }
 
-    /**
-     * This methods override toString to return a string that shows
-     * the entire game board.
-     *
-     * @param obj Object class
-     *
-     * @return string that shows entire game board
-     *
-     * @pre board != null
-     *
-     * @post toString = [current game board]
-     */
-    @Override
-    public String toString(Object obj) {}
+    public int getNumColumns() {
+        return width;
+    }
 
-
-
+    public int getNumToWin() {
+        return numToWin;
+    }
 
 }

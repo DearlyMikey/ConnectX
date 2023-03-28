@@ -27,7 +27,10 @@ public class BoardPosition {
      *
      * @post row = r AND col = c
      */
-    public BoardPosition(int r, int c) {}
+    public BoardPosition(int r, int c) {
+        row = r;
+        col = c;
+    }
     /**
      * This method returns the row number
      *
@@ -39,7 +42,9 @@ public class BoardPosition {
      *
      * @return row
      */
-    public int getRow() {}
+    public int getRow() {
+        return row;
+    }
     /**
      * This method returns the column number
      *
@@ -51,7 +56,9 @@ public class BoardPosition {
      *
      * @return col
      */
-    public int getCol() {}
+    public int getCol() {
+        return col;
+    }
     /**
      * This method overrides the toString() method to
      * create a string in the format "<row>,<col>"
@@ -60,7 +67,9 @@ public class BoardPosition {
      *
      */
     @Override
-    public String toString() {}
+    public String toString() {
+        return "(" + getRow() + ", " + getCol() + ")";
+    }
     /**
      * This method overrides the equals() method inherited from the
      * Object class
@@ -69,6 +78,12 @@ public class BoardPosition {
      *
      */
     @Override
-    public boolean equals(Object obj) {}
+    public boolean equals(Object obj) {
+        final BoardPosition current = (BoardPosition) obj;
+        if((this.getRow() != current.getRow() || (this.getCol() != current.getCol()))) {
+            return false;
+        }
+        return true;
+    }
 
 }
