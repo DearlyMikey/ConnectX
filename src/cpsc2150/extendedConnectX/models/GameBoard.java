@@ -1,4 +1,8 @@
 package cpsc2150.extendedConnectX.models;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This class represents the game board used
@@ -23,6 +27,7 @@ public class GameBoard extends AbsGameBoard implements IGameBoard{
     private int width;
     private char[][] board;
     private int numToWin;
+    private Map<Character, List<BoardPosition>> Map;
 
     /**
      *
@@ -32,9 +37,10 @@ public class GameBoard extends AbsGameBoard implements IGameBoard{
      * @post board = new char[row][col] AND every space on board is empty
      *
      */
-    public GameBoard() {
-        height = 9;
-        width = 7;
+    public GameBoard(int row, int col, int num_To_Win) {
+        height = row;
+        width = col;
+        numToWin = num_To_Win;
         board = new char[height+1][width+1];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {

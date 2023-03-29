@@ -15,8 +15,15 @@ package cpsc2150.extendedConnectX.models;
  *              0 < number_of_cols <= MAXCOLS
  */
 public interface IGameBoard {
-    public static final int MAXROWS = 9;
-    public static final int MAXCOLS = 7;
+    public static final int MINROWS = 3;
+    public static final int MINCOLS = 3;
+    public static final int MINTOWIN = 3;
+    public static final int MAXROWS = 100;
+    public static final int MAXCOLS = 100;
+    public static final int MAXTOWIN = 25;
+    public static final int MINPLAYERS = 2;
+    public static final int MAXPLAYERS = 10;
+
 
     /**
      * This method returns the number of rows in the GameBoard
@@ -103,11 +110,11 @@ public interface IGameBoard {
      */
     public default boolean checkForWin(int c) {
 
-        for(int i = 0; i < MAXROWS; i++) {
+        for(int i = getNumRows() - 1; i >= 0; i--) {
             BoardPosition pos = new BoardPosition(i,c);
             if (whatsAtPos(pos) != ' ') {
-                if(checkHorizWin(pos, whatsAtPos(pos)) ||
-                        checkVertWin(pos, whatsAtPos(pos))) {
+                if(checkHorizWin(pos, whatsAtPos(pos)) || checkVertWin(pos, whatsAtPos(pos)) ||
+                checkDiagWin(pos, whatsAtPos(pos))) {
                     return true;
                 }
             }
@@ -265,7 +272,7 @@ public interface IGameBoard {
             }
         }
 
-        for(int i = row - 1, j = col + 1; i < getNumRows() && j >= 0; i--, j++) {
+        for(int i = row - 1, j = col + 1; i >= 0 && j < getNumColumns(); i--, j++) {
             BoardPosition bottomLeftToRight = new BoardPosition(i,j);
             if (isPlayerAtPos(bottomLeftToRight, p)) {
                 count++;
@@ -281,7 +288,7 @@ public interface IGameBoard {
         //reset count because we're checking a different diagonal
         count = 1;
 
-        for(int i = row + 1, j = col + 1; i < getNumRows() && j >= 0; i++, j++) {
+        for(int i = row + 1, j = col + 1; i < getNumRows() && j < getNumColumns(); i++, j++) {
             BoardPosition bottomRightToLeft = new BoardPosition(i,j);
             if (isPlayerAtPos(bottomRightToLeft, p)) {
                 count++;
@@ -294,7 +301,7 @@ public interface IGameBoard {
             }
         }
 
-        for(int i = row - 1, j = col - 1; i < getNumRows() && j >= 0; i--, j--) {
+        for(int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
             BoardPosition bottomRightToLeft = new BoardPosition(i,j);
             if (isPlayerAtPos(bottomRightToLeft, p)) {
                 count++;

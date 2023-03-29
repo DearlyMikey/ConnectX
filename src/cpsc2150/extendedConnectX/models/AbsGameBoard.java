@@ -19,10 +19,17 @@ public abstract class AbsGameBoard implements IGameBoard {
         String board = "";
         // print the column numbers on top of the board
         for (int i = 0; i < getNumColumns(); i++) {
-                board += "| " + i;
+                if(i <= 9) {
+                    board += "| " + i;
+                }
+                else {
+                    board += "|" + i;
+                }
         }
+
         board += "|";
         board += "\n";
+
         // now, traverse the entire board and print out its contents
         for (int i = getNumRows() - 1; i >= 0; i--) {
             board += "|";
