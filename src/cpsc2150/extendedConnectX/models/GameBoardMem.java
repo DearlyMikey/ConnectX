@@ -30,7 +30,6 @@ public class GameBoardMem extends AbsGameBoard {
         for(int i = 0; whatsAtPos(pos) != ' '; i++) {
             pos = new BoardPosition(i, c);
         }
-
         gameMap.get(p).add(pos);
     }
 

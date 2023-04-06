@@ -19,10 +19,10 @@ public class GameScreen {
      * @param args
      */
     public static void main(String[] args) {
-        boolean playAgain = true;
+        char playAgain = 'Y';
         Scanner input = new Scanner(System.in);
 
-        while(playAgain) {
+        while(playAgain == 'Y' || playAgain == 'y') {
 
             System.out.println("How many players?");
             int numPlayers = input.nextInt();
@@ -177,21 +177,20 @@ public class GameScreen {
             }
 
             System.out.println("Would you like to play again? Y/N");
-            String userInput2;
-            Scanner repeatIn = new Scanner(System.in);
-            userInput2 = repeatIn.next();
-            userInput2 = userInput2.toUpperCase();
 
-            boolean repeat = true;
-            while (!(userInput2.equals("Y")) && !(userInput2.equals("N"))) {
+            Scanner repeatIn = new Scanner(System.in);
+            playAgain = repeatIn.next().charAt(0);
+
+
+            while ( playAgain != 'n' && playAgain != 'N' && playAgain != 'Y' && playAgain != 'y') {
                 System.out.println("Invalid response, please input either Y or N");
-                userInput2 = repeatIn.next();
-                if ( userInput2.equals("N")) {
+                playAgain = repeatIn.next().charAt(0);
+                if ( playAgain != 'n' || playAgain != 'N') {
                     System.out.println("Bye bye! Thanks for playing!");
-                    playAgain = false;
                 }
             }
         }
+        input.close();
     }
 
 }
