@@ -5,14 +5,22 @@ package cpsc2150.extendedConnectX.models;
  *
  * Initialization ensures:
  *                      Every space in the GameBoard is a blank character/empty and the board is
- *                      MAXROWS x MAXCOLS
+ *                      (MINROWS <= [number of rows] <= MAXROWS) x (MINCOLUMNS <= [number of columns] <= MAXCOLUMNS)
  *
- *  Defines: number_of_rows: Z
- *           number_of_columns: Z
- *           number_to_win: Z
+ *  @defines: MINROWS: Z - minimum number of rows the board can have
+ *            MINCOLS: Z - minimum number of columns the board can have
+ *            MINTOWIN: Z - minimum number of tokens in a row to win
+ *            MAXROWS: Z - maximum number of rows the can have
+ *            MAXCOLS: Z - maximum number of columns the board can have
+ *            MAXTOWIN: Z - maximum number of tokens in a row to win
+ *            MINPLAYERS: Z - minimum number of players in a game
+ *            MAXPLAYERS: Z - maximum number of player in a game
  *
- * Constraints: 0 < number_of_rows <= MAXROWS
- *              0 < number_of_cols <= MAXCOLS
+ * @constraints: MINROWS <= [number of rows] <= MAXROWS AND
+ * MINCOLUMNS <= [number of columns] <= MAXCOLUMNS AND
+ * MINTOWIN <= [number in a row to win] <= MAXTOWIN AND
+ * MINPLAYERS <= [number of players] <= MAXPLAYERS
+ *
  */
 public interface IGameBoard {
     public static final int MINROWS = 3;
@@ -134,8 +142,8 @@ public interface IGameBoard {
      *       self = #self
      */
     public default boolean checkTie() {
-        for(int i = 0; i < MAXCOLS; i++) {
-            if (checkIfFree(i)) {
+        for(int i = 0; i < getNumColumns(); i++) {
+            if (checkIfFree(i) || checkForWin(i)) {
                 return false;
             }
         }
@@ -177,8 +185,6 @@ public interface IGameBoard {
                 if (count == getNumToWin()) {
                     return true;
                 }
-            } else {
-                count = 0;
             }
         }
 
@@ -190,8 +196,6 @@ public interface IGameBoard {
                 if(count == getNumToWin()) {
                     return true;
                 }
-            } else {
-                count = 0;
             }
         }
         return false;
@@ -260,6 +264,7 @@ public interface IGameBoard {
         int col = pos.getCol();
         int count = 1;
 
+        //actually bottom right to left
         for(int i = row + 1, j = col - 1; i < getNumRows() && j >= 0; i++, j--) {
             BoardPosition topRightToLeft = new BoardPosition(i,j);
             if (isPlayerAtPos(topRightToLeft, p)) {
@@ -272,9 +277,10 @@ public interface IGameBoard {
             }
         }
 
-        for(int i = row - 1, j = col + 1; i >= 0 && j < getNumColumns(); i--, j++) {
-            BoardPosition bottomLeftToRight = new BoardPosition(i,j);
-            if (isPlayerAtPos(bottomLeftToRight, p)) {
+        // actually top right to left
+        for(int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            BoardPosition bottomRightToLeft = new BoardPosition(i,j);
+            if (isPlayerAtPos(bottomRightToLeft, p)) {
                 count++;
                 if (count == getNumToWin()) {
                     return true;
@@ -285,9 +291,12 @@ public interface IGameBoard {
             }
         }
 
+
         //reset count because we're checking a different diagonal
         count = 1;
 
+
+        //actually bottom left to left
         for(int i = row + 1, j = col + 1; i < getNumRows() && j < getNumColumns(); i++, j++) {
             BoardPosition bottomRightToLeft = new BoardPosition(i,j);
             if (isPlayerAtPos(bottomRightToLeft, p)) {
@@ -301,9 +310,10 @@ public interface IGameBoard {
             }
         }
 
-        for(int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-            BoardPosition bottomRightToLeft = new BoardPosition(i,j);
-            if (isPlayerAtPos(bottomRightToLeft, p)) {
+        //actually top left to right
+        for(int i = row - 1, j = col + 1; i >= 0 && j < getNumColumns(); i--, j++) {
+            BoardPosition bottomLeftToRight = new BoardPosition(i,j);
+            if (isPlayerAtPos(bottomLeftToRight, p)) {
                 count++;
                 if (count == getNumToWin()) {
                     return true;
@@ -313,6 +323,7 @@ public interface IGameBoard {
                 break;
             }
         }
+
         return false;
     }
 

@@ -13,8 +13,8 @@ package cpsc2150.extendedConnectX.models;
  */
 public class BoardPosition {
 
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
     /**
      * This is the constructor for this class that initializes
      * the board position
@@ -68,7 +68,7 @@ public class BoardPosition {
      */
     @Override
     public String toString() {
-        return "(" + getRow() + ", " + getCol() + ")";
+        return getRow() + "," + getCol();
     }
     /**
      * This method overrides the equals() method inherited from the
@@ -80,10 +80,7 @@ public class BoardPosition {
     @Override
     public boolean equals(Object obj) {
         final BoardPosition current = (BoardPosition) obj;
-        if((this.getRow() != current.getRow() || (this.getCol() != current.getCol()))) {
-            return false;
-        }
-        return true;
+        return this.getRow() == current.getRow() && (this.getCol() == current.getCol());
     }
 
 }
