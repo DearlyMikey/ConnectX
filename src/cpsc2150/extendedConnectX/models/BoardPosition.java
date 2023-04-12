@@ -56,10 +56,11 @@ public class BoardPosition {
      *
      * @return col
      */
-    public int getCol() {
+    public int getColumn() {
         return col;
     }
     /**
+     *
      * This method overrides the toString() method to
      * create a string in the format "<row>,<col>"
      *
@@ -68,7 +69,7 @@ public class BoardPosition {
      */
     @Override
     public String toString() {
-        return getRow() + "," + getCol();
+        return getRow() + "," + getColumn();
     }
     /**
      * This method overrides the equals() method inherited from the
@@ -79,8 +80,21 @@ public class BoardPosition {
      */
     @Override
     public boolean equals(Object obj) {
-        final BoardPosition current = (BoardPosition) obj;
-        return this.getRow() == current.getRow() && (this.getCol() == current.getCol());
+//        final BoardPosition current = (BoardPosition) obj;
+//        return this.getRow() == current.getRow() && (this.getCol() == current.getCol());
+        if (obj == this) {
+            return true;
+        } else if (obj == null) {
+            return false;
+        }
+
+        if (obj instanceof BoardPosition) {
+            BoardPosition comp = (BoardPosition) obj;
+            if(col == comp.col && row == comp.row) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

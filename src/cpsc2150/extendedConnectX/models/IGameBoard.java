@@ -175,7 +175,7 @@ public interface IGameBoard {
     public default boolean checkHorizWin(BoardPosition pos, char p) {
         int count = 1;
         int row = pos.getRow();
-        int col = pos.getCol();
+        int col = pos.getColumn();
 
         // checks to the right
         for(int i = col + 1; i < getNumColumns(); i++) {
@@ -225,7 +225,7 @@ public interface IGameBoard {
     public default boolean checkVertWin(BoardPosition pos, char p) {
         int count = 1;
         int row = pos.getRow();
-        int col = pos.getCol();
+        int col = pos.getColumn();
 
         for(int i = row - 1; i >= 0; i--) {
             BoardPosition temp = new BoardPosition(i,col);
@@ -261,7 +261,7 @@ public interface IGameBoard {
      */
     public default boolean checkDiagWin(BoardPosition pos, char p) {
         int row = pos.getRow();
-        int col = pos.getCol();
+        int col = pos.getColumn();
         int count = 1;
 
         //actually bottom right to left

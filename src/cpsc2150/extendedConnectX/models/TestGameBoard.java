@@ -161,6 +161,25 @@ public class TestGameBoard {
     }
 
     @Test
+    public void testCheckHorizWin_win_last_marker_right() {
+        int row = 5;
+        int col = 5;
+        int numToWin = 4;
+        IGameBoard board = MakeGameBoard(row,col,numToWin);
+        board.placeToken('O',0);
+        board.placeToken('O',1);
+        board.placeToken('O',2);
+        board.placeToken('X',3);
+        board.placeToken('O',4);
+        board.placeToken('X',1);
+        board.placeToken('X',2);
+        board.placeToken('X',3);
+        board.placeToken('X',4);
+        BoardPosition pos = new BoardPosition(1,4);
+        assertTrue(board.checkHorizWin(pos, 'X'));
+    }
+
+    @Test
     public void testCheckHorizWin_false_last_marker_wrong() {
         int row = 5;
         int col = 5;
@@ -676,9 +695,30 @@ public class TestGameBoard {
     }
 
     @Test
-    public void testPlaceToken_row_not_empty() {
+    public void testPlaceToken_col_not_empty() {
         int row = 4;
         int col = 4;
+        int numToWin = 4;
+        IGameBoard board = MakeGameBoard(row, col, numToWin);
+        char[][] expBoard = new char[row+1][col+1];
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                expBoard[i][j] = ' ';
+            }
+        }
+        expBoard[0][0] = 'X';
+        expBoard[1][0] = 'X';
+        expBoard[2][0] = 'X';
+        board.placeToken('X',0);
+        board.placeToken('X',0);
+        board.placeToken('X',0);
+        assertEquals(testArray(expBoard,row,col), board.toString());
+    }
+
+    @Test
+    public void testPlaceToken_row_not_empty() {
+        int row = 5;
+        int col = 5;
         int numToWin = 5;
         IGameBoard board = MakeGameBoard(row, col, numToWin);
         char[][] expBoard = new char[row+1][col+1];

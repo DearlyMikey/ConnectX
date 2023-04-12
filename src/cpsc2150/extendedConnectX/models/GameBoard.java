@@ -1,8 +1,6 @@
 package cpsc2150.extendedConnectX.models;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * This class represents the game board used
@@ -85,7 +83,7 @@ public class GameBoard extends AbsGameBoard implements IGameBoard{
      */
     public char whatsAtPos(BoardPosition pos) {
         int row = pos.getRow();
-        int col = pos.getCol();
+        int col = pos.getColumn();
         return board[row][col];
     }
 
